@@ -1,5 +1,4 @@
 // 这个文件是要实现手写promise的一个实现练习
-
 // 定义的三个状态，其实应该是私有变量
 const PENDING = 'pending'  
 const RESOLVED = 'resolved' //官方为fulfilled 

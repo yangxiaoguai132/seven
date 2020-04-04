@@ -1,5 +1,4 @@
 // 节流函数代码
-
 // timer版
 function throttle(fn, timer) {
     let timer = null;

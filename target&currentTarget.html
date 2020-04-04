@@ -1,0 +1,79 @@
+<!--
+ * @Author: nanyang.yang
+ * @Date: 2020-03-28 14:46:01
+ * @LastEditors: nanyang.yang
+ * @LastEditTime: 2020-03-30 20:37:33
+ * @Descripttion: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>        
+        html *{            
+            padding: 0;            
+            margin: 0;        
+        }        
+        #body{
+            display: flex;
+            width: 800px;
+            height: 200px;
+            background-color: blue;
+        }
+        .child1 {
+            width:0;
+            flex:1;
+            background-color: red;
+        }
+        .child2 {
+            /* width:200px; */
+            flex:1;
+            background-color: yellow;
+        }
+        .child3 {
+            width: 200px;
+            background-color: green;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <div id="body">     
+        body   
+        <div class="f1"
+        style="text-align: center;margin:15px;
+border:1px solid red;border-radius:3px;">
+            f1
+            <div class="f2" style="margin: 25px; border:1px solid royalblue;border-radius:3px;">
+                f2
+                <div class="f3" style="margin:25px;border:1px solid skyblue;border-radius:3px;">
+                    f3
+                    <button style="margin:10px" class="f4">
+                        Buttonf4
+                    </button>
+                </div>
+            </div>
+        </div>     
+    </div>
+    <script>
+        // function clickFunc(event) {
+        //     // 点击事件的元素
+        //     console.log('target--------', event.target);
+        //     // onClick事件绑定的元素，包含子元素
+        //     console.log('currentTarget---------', event.currentTarget);
+        // }
+        // var dom = document.getElementsByClassName('f1')[0];
+        // dom && dom.addEventListener('click', function(e){
+        //     console.log('target--------', event.target);
+        //     console.log('currentTarget---------', event.currentTarget);
+        // });
+        $('.f1').on('click','.f3',function(e){
+            console.log('target--------', e.target);
+            console.log('currentTarget---------', e.currentTarget);
+            console.log('delegateTarget--------', e.delegateTarget);
+        })
+    </script>
+</body>
+</html>
