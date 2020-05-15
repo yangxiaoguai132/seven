@@ -1,4 +1,10 @@
-// 最简单的深拷贝
+/*
+ * @Author: nanyang.yang
+ * @Date: 2020-03-26 18:37:34
+ * @LastEditors: nanyang.yang
+ * @LastEditTime: 2020-04-08 19:56:01
+ * @Descripttion: 深拷贝
+ */
 function deepClone(obj){
     if(obj instanceof Date){
         return new Date(obj);

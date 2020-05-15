@@ -1,4 +1,10 @@
-// 这个是redux源码书写练习
+/*
+ * @Author: nanyang.yang
+ * @Date: 2020-03-26 15:07:37
+ * @LastEditors: nanyang.yang
+ * @LastEditTime: 2020-04-08 14:36:49
+ * @Descripttion: 这个是redux源码书写练习
+ */
 let createStore = (reducer) => {
     let state;
     let listeners = [];
@@ -15,7 +21,8 @@ let createStore = (reducer) => {
     dispatch();
     return {
         getState,
-        dispatch
+        dispatch,
+        subscribe
     }
 };
 

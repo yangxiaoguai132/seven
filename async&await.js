@@ -2,7 +2,7 @@
  * @Author: nanyang.yang
  * @Date: 2020-03-29 18:47:05
  * @LastEditors: nanyang.yang
- * @LastEditTime: 2020-04-04 17:48:16
+ * @LastEditTime: 2020-04-07 09:54:10
  * @Descripttion: async await一些执行测试小代码
  */
 // --------------------------------------------------------------
@@ -37,7 +37,7 @@ async function f(){
     }catch(err) {
 
     }
-    // 这条语句如果放进上面的try里面，还是不执行的额
+    // 这条语句如果放进上面的try里面，还是不执行的
     return await Promise.resolve('hello word');
 }
 f().then(v => console.log(v)); // hello word

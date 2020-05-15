@@ -1,3 +1,10 @@
+/*
+ * @Author: nanyang.yang
+ * @Date: 2020-03-26 07:39:27
+ * @LastEditors: nanyang.yang
+ * @LastEditTime: 2020-04-14 19:51:26
+ * @Descripttion: 
+ */
 // 一个promise自己玩的各种情况测试代码
 
 
@@ -66,6 +73,44 @@ async function main(){
     console.log('arr', arr);
 }
 main();
+
+
+// 来一个变种，如果要是执行回调函数
+// function request(urls, maxNumber, callback) ，
+// 根据urls数组内的url地址进行并发网络请求，最大并发数maxNumber,
+// 当所有请求完毕后调用callback函数
+function request(urls, maxNumber, callback) {
+	return new Promise((resolve, reject) => {
+        try{
+            let i = 0;
+            let len = urls.length;
+            for(;i < maxNumber;i++){
+                handle(i);
+            }
+            function handle(i){
+               fetchData(urls[i]).then(() => {
+                    if(i===len-1){
+                        resolve();
+                        //callback();
+                    }
+                    i = i + maxNumber;
+                    if(i < len){
+                        handle(i);
+                    }
+                }).catch((err) => {
+                    i = i + maxNumber;
+                   	reject(err);
+                });
+            }
+
+        }catch(err){
+            reject(err);
+        }
+    }).then(() => {// 函数放在这里比较合适，不要把callback放在上面
+        callback();
+    });
+}
+
 
 
 // --------------------------------------------------------------
@@ -176,7 +221,7 @@ Promise.race([imgRequest(), timeout()]).then(() => {
     console.log('error', error);
 });
 
-
+// --------------------------------------------------------------
 /**
  * @description: 红灯3秒亮一次，绿灯1秒亮一次，黄灯2秒亮一次；如何让三个灯不断交替重复亮灯？（用Promse实现）三个亮灯函数已经存在
  * @param {type} 
@@ -214,3 +259,133 @@ function func(){
     });
 }
 func();
+
+// --------------------------------------------------------------
+/**
+ * @description: 实现 mergePromise 函数，把传进去的数组按顺序先后执行，并且把返回的数据先后放到数组 data 中。
+ * @param {type} 
+ * @return: 
+ * 
+ */
+const timeout = ms => new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve();
+    }, ms);
+});
+
+const ajax1 = () => timeout(2000).then(() => {
+    console.log('1');
+    return 1;
+});
+
+const ajax2 = () => timeout(1000).then(() => {
+    console.log('2');
+    return 2;
+});
+
+const ajax3 = () => timeout(2000).then(() => {
+    console.log('3');
+    return 3;
+});
+
+var mergePromise = ajaxArray => {
+    // 在这里实现你的代码
+    const data = [];
+    const sequence = Promise.resolve();
+    ajaxArray.forEach((ajax) => {
+        // 下面这个估计就是像是可以一个串行遍历的效果
+        sequence = sequence.then(ajax).then((value) => {
+            data.push(value); 
+            return data;
+        });
+    });
+    return sequence;
+};
+
+mergePromise([ajax1, ajax2, ajax3]).then(data => {
+    console.log('done');
+    console.log(data); // data 为 [1, 2, 3]
+});
+
+// --------------------------------------------------------------
+/**
+ * @description: Promise.resolve()测试实现代码
+ * @param {type} 
+ * @return: 
+ * 
+ */
+Promise.resolve(() => {
+    return Promise.resolve("3");
+}).then((value) => {
+    console.log(value);
+})
+
+
+// --------------------------------------------------------------
+/**
+ * @description: 测试输出
+ * @param {type} 
+ * @return: 
+ * 
+ */
+
+console.log('A');
+var promise = new Promise((resolve, reject) => {
+    console.log('C');
+    setTimeout(() => {
+        console.log('D');
+        resolve();
+        reject();
+        resolve()
+    }, 10); 
+	setTimeout(() => {console.log('H');});
+});
+promise.then((res) => {
+	console.log('E')
+});
+promise.then((res) => {
+    console.log('F')
+});
+promise.catch((res) => {
+    console.log('G')
+});
+console.log('B');
+// A
+// C
+// B
+// H
+// D
+// E
+// F
+// 这里需要注意的是，
+// *只有当promise状态改变的时候才能够将对应的任务函数加载微任务队列中
+
+
+// --------------------------------------------------------------
+/**
+ * @description: 测试输出
+ * @param {type} 
+ * @return: 
+ * 
+ */
+const par = () => (
+    new Promise((resolve, reject) => {
+        console.log(3);
+        const inner = new Promise((resolve, reject) => {
+            console.log(7);
+            setTimeout(() => {
+                console.log(5);
+                resolve(6);
+            }, 0);
+            resolve(1);
+        });
+        resolve(2);
+        inner.then((arg) => {
+            console.log('000000000', arg); 
+        })
+    })
+);
+par().then((arg) => {
+    console.log('888888888', arg); 
+});
+console.log(4);
