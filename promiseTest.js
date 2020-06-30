@@ -1,10 +1,10 @@
 /*
- * @Author: nanyang.yang
- * @Date: 2020-03-26 07:39:27
- * @LastEditors: nanyang.yang
- * @LastEditTime: 2020-04-14 19:51:26
- * @Descripttion: 
+ * @Author:  nanyang.yang 
+ * @Date: 2020-05-21 22:37:54 
+ * @Last Modified by:    nanyang.yang 
+ * @Last Modified time: 2020-05-21 22:37:54 
  */
+
 // 一个promise自己玩的各种情况测试代码
 
 
